@@ -1,0 +1,383 @@
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+    overflow: hidden;
+    color: #333;
+}
+
+h1 {
+    font-size: clamp(28px, 8vw, 48px);
+    color: #2c3e50;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: 90vw;
+    width: clamp(300px, 80vw, 600px);
+    min-height: clamp(200px, 50vh, 300px);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: clamp(5px, 2vw, 10px);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: width 0.3s;
+}
+
+#main-menu, #new-game-menu, #game-menu {
+    margin: clamp(5px, 1.5vw, 10px) 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 2vw, 15px);
+    align-items: center;
+    width: 100%;
+}
+
+#new-game-menu, #game-menu {
+    display: none;
+}
+
+#main-menu button, #new-game-menu .menu-item.button-item button {
+    padding: clamp(10px, 2.5vw, 15px) clamp(20px, 5vw, 30px);
+    font-size: clamp(16px, 4vw, 22px);
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.3s;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: clamp(200px, 60vw, 300px);
+}
+
+#main-menu button:hover, #new-game-menu .menu-item.button-item button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.2);
+}
+
+#new-game-menu .menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: clamp(200px, 60vw, 300px);
+    height: clamp(40px, 10vw, 60px);
+    background-color: #fff;
+    border: 2px solid #34495e;
+    padding: clamp(3px, 1vw, 5px);
+    box-sizing: border-box;
+    font-size: clamp(14px, 3vw, 18px);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#new-game-menu .menu-item input,
+#new-game-menu .menu-item select {
+    width: clamp(150px, 50vw, 250px);
+    height: clamp(20px, 5vw, 30px);
+    margin-top: clamp(3px, 1vw, 5px);
+    padding: 0;
+    font-size: clamp(12px, 3vw, 16px);
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid #bdc3c7;
+}
+
+#new-game-menu .menu-item.button-item {
+    border: none;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    height: auto;
+}
+
+#game-menu button {
+    padding: clamp(8px, 2vw, 10px) clamp(15px, 4vw, 20px);
+    font-size: clamp(14px, 3vw, 18px);
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.3s;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+#game-menu button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+#game-board {
+    display: grid;
+    position: relative;
+    border: 3px solid #34495e;
+    border-radius: 10px;
+    padding: clamp(3px, 1vw, 5px);
+    background-color: #ecf0f1;
+    display: none;
+}
+
+#player-info {
+    margin-bottom: clamp(5px, 1.5vw, 10px);
+    font-size: clamp(14px, 3vw, 18px);
+    font-weight: 700;
+    color: #2c3e50;
+    display: none;
+    word-wrap: break-word;
+    max-width: 90%;
+    padding: 0 clamp(5px, 1vw, 10px);
+}
+
+.tile {
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(16px, 4vw, 24px);
+    color: white;
+    text-shadow: 2px 2px 2px #000;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.empty {
+    background: #1abc9c !important;
+    cursor: default;
+    box-shadow: none;
+}
+
+#info {
+    margin-top: clamp(10px, 2vw, 20px);
+    font-size: clamp(14px, 3vw, 18px);
+    font-weight: 700;
+    color: #2c3e50;
+    display: none;
+}
+
+#tutorial {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 100;
+    display: none;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+#tutorial-content {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: clamp(15px, 4vw, 30px);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    max-width: clamp(300px, 70vw, 400px);
+    color: #2c3e50;
+}
+
+#tutorial h2 {
+    font-size: clamp(20px, 5vw, 28px);
+    margin-bottom: clamp(10px, 2vw, 15px);
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#tutorial p {
+    font-size: clamp(14px, 3vw, 18px);
+    margin: clamp(5px, 1.5vw, 10px) 0;
+    color: #34495e;
+}
+
+#tutorial button {
+    margin-top: clamp(10px, 2vw, 20px);
+    padding: clamp(8px, 2vw, 10px) clamp(15px, 4vw, 20px);
+    font-size: clamp(14px, 3vw, 18px);
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s, box-shadow 0.3s;
+}
+
+#tutorial button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+#hint {
+    position: fixed;
+    top: clamp(30px, 5vw, 50px);
+    left: clamp(5px, 1vw, 10px);
+    background: #fff;
+    border: 2px solid #34495e;
+    padding: clamp(5px, 1.5vw, 10px);
+    font-size: clamp(10px, 2.5vw, 14px);
+    max-width: clamp(150px, 40vw, 200px);
+    z-index: 101;
+    display: none;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.hidden {
+    display: none !important;
+}
+
+#easter-egg, #tutorial-button {
+    position: fixed;
+    top: clamp(5px, 2vw, 10px);
+    font-size: clamp(20px, 5vw, 28px);
+    cursor: pointer;
+    z-index: 101;
+    transition: transform 0.3s;
+}
+
+#easter-egg:hover, #tutorial-button:hover {
+    transform: rotate(360deg);
+}
+
+#easter-egg {
+    right: clamp(5px, 1vw, 10px);
+    display: none;
+}
+
+#tutorial-button {
+    left: clamp(5px, 1vw, 10px);
+    display: none;
+}
+
+@media (max-width: 600px) {
+    #game-container {
+        width: 90vw;
+        padding: clamp(5px, 2vw, 8px);
+    }
+    #main-menu, #new-game-menu, #game-menu {
+        margin: clamp(5px, 1.5vw, 8px) 0;
+        gap: clamp(8px, 1.5vw, 12px);
+    }
+    #main-menu button, #new-game-menu .menu-item.button-item button {
+        font-size: clamp(14px, 3.5vw, 18px);
+        padding: clamp(10px, 2vw, 12px) clamp(20px, 4vw, 25px);
+        width: clamp(180px, 55vw, 250px);
+    }
+    #new-game-menu .menu-item {
+        width: 90%;
+        height: clamp(40px, 8vw, 50px);
+        font-size: clamp(12px, 2.5vw, 16px);
+        padding: clamp(3px, 0.8vw, 4px);
+    }
+    #new-game-menu .menu-item input,
+    #new-game-menu .menu-item select {
+        width: clamp(140px, 45vw, 200px);
+        height: clamp(18px, 4vw, 25px);
+        margin-top: clamp(3px, 0.8vw, 4px);
+    }
+    #game-menu button {
+        font-size: clamp(12px, 2.5vw, 16px);
+        padding: clamp(8px, 1.5vw, 10px) clamp(12px, 3vw, 20px);
+    }
+    .tile {
+        font-size: clamp(14px, 3.5vw, 20px);
+    }
+    #info {
+        font-size: clamp(12px, 2.5vw, 16px);
+    }
+    #hint {
+        font-size: clamp(8px, 2vw, 12px);
+        max-width: clamp(120px, 35vw, 150px);
+    }
+    #player-info {
+        font-size: clamp(12px, 2.5vw, 16px);
+    }
+    #tutorial-content {
+        max-width: 85vw;
+        padding: clamp(15px, 3vw, 20px);
+    }
+    #tutorial h2 {
+        font-size: clamp(18px, 4vw, 24px);
+    }
+    #tutorial p {
+        font-size: clamp(12px, 2.5vw, 16px);
+    }
+}
+
+@media (max-width: 400px) {
+    #game-container {
+        min-height: clamp(150px, 45vh, 250px);
+        padding: clamp(3px, 1.5vw, 5px);
+    }
+    #main-menu button, #new-game-menu .menu-item.button-item button {
+        font-size: clamp(12px, 3vw, 14px);
+        padding: clamp(8px, 1.5vw, 10px) clamp(15px, 3vw, 20px);
+        width: clamp(150px, 50vw, 200px);
+    }
+    #new-game-menu .menu-item {
+        height: clamp(30px, 7vw, 40px);
+        font-size: clamp(10px, 2vw, 12px);
+    }
+    #new-game-menu .menu-item input,
+    #new-game-menu .menu-item select {
+        width: clamp(120px, 40vw, 150px);
+        height: clamp(15px, 3.5vw, 20px);
+    }
+    #game-menu button {
+        font-size: clamp(10px, 2vw, 12px);
+        padding: clamp(6px, 1.2vw, 8px) clamp(10px, 2.5vw, 15px);
+    }
+    .tile {
+        font-size: clamp(12px, 3vw, 14px);
+    }
+    #info {
+        font-size: clamp(10px, 2vw, 12px);
+    }
+    #hint {
+        font-size: clamp(6px, 1.5vw, 8px);
+        max-width: clamp(100px, 30vw, 120px);
+    }
+    #player-info {
+        font-size: clamp(10px, 2vw, 12px);
+    }
+    #tutorial h2 {
+        font-size: clamp(16px, 3.5vw, 18px);
+    }
+    #tutorial p {
+        font-size: clamp(10px, 2vw, 12px);
+    }
+    #tutorial button {
+        font-size: clamp(10px, 2vw, 12px);
+        padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 15px);
+    }
+}
